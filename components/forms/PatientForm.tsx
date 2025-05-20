@@ -8,6 +8,7 @@ import CustomFormField from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
 import { useState } from "react";
 import { UserFormValidation } from "@/lib/validation";
+import { useRouter } from "next/navigation";
 
 export enum FormFieldType {
   INPUT = "input",
@@ -21,6 +22,7 @@ export enum FormFieldType {
 
 
 const PatientForm = () => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   // 1. Define your form.
 
@@ -42,6 +44,11 @@ const PatientForm = () => {
         email,
         phone,
       }
+
+      // const user = await createUser(userData);
+      // if(user) {
+      //   router.push(`/patients/${user.id}/register`);
+      // }
     } catch (error) {
       console.error("Error submitting form:", error);
     }
