@@ -20,6 +20,15 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { render } from "react-dom";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { Doctors } from "@/constants";
+import { Textarea } from "./ui/textarea";
 
 interface CustomProps {
   control: Control<any>;
@@ -98,7 +107,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
             <DatePicker
               selected={field.value}
               onChange={(date) => field.onChange(date)}
-              dateFormat={dateFormat ?? 'MM/dd/yyyy'}
+              dateFormat={dateFormat ?? "MM/dd/yyyy"}
               showTimeSelect={showTimeSelect ?? false}
               timeInputLabel="Time:"
               wrapperClassName="date-picker"
@@ -106,7 +115,45 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
           </FormControl>
         </div>
       );
-    case FormFieldType.SKELETON: return renderSkeleton ? renderSkeleton(field) : null; 
+    case FormFieldType.SELECT:
+      return (
+        <FormControl>
+          <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <SelectTrigger className="shad-select-trigger">
+              <SelectValue placeholder={props.placeholder} />
+            </SelectTrigger>
+            <SelectContent className="shad-select-content">
+              {Doctors.map((doctor) => (
+                <SelectItem key={doctor.name} value={doctor.name}>
+                  <div className="flex cursor-pointer items-center gap-2">
+                    <Image
+                      src={doctor.image}
+                      alt={doctor.name}
+                      height={32}
+                      width={32}
+                      className="rounded-full border border-dark-500"
+                    />
+                    <p>{doctor.name}</p>
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </FormControl>
+      );
+    case FormFieldType.TEXTAREA: 
+     return (
+      <FormControl>
+        <Textarea
+          {...field}
+          placeholder={placeholder}
+          className="shad-textArea"
+          disabled={props.disabled}
+        />
+      </FormControl>
+     )  
+    case FormFieldType.SKELETON:
+      return renderSkeleton ? renderSkeleton(field) : null;
     default:
       break;
   }

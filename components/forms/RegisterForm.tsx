@@ -62,6 +62,7 @@ const RegisterForm = ({ user }: { user: User }) => {
           <h1 className="header">Welcome👋</h1>
           <p className="text-dark-700">Let us know more about yourself.</p>
         </section>
+        {/* peronsal information */}
         <section className="space-y-6">
           <div className="mb-9 space-y-1">
             <h2 className="sub-header">Personal Information</h2>
@@ -116,7 +117,9 @@ const RegisterForm = ({ user }: { user: User }) => {
                   {GenderOptions.map((option) => (
                     <div key={option} className="radio-group">
                       <RadioGroupItem value={option} id={option} />
-                        <label htmlFor={option} className="cursor-pointer">{option}</label>
+                      <label htmlFor={option} className="cursor-pointer">
+                        {option}
+                      </label>
                     </div>
                   ))}
                 </RadioGroup>
@@ -124,8 +127,105 @@ const RegisterForm = ({ user }: { user: User }) => {
             )}
           />
         </div>
-        <div className="flex flex-col gap-6 xl:flex-row"></div>
-        <div className="flex flex-col gap-6 xl:flex-row"></div>
+        <div className="flex flex-col gap-6 xl:flex-row">
+          <CustomFormField
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="address"
+            label="Address"
+            placeholder="123 Main St, City, State, Zip"
+          />
+          <CustomFormField
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="occupation"
+            label="Occupation"
+            placeholder="Software Engineer"
+          />
+        </div>
+        <div className="flex flex-col gap-6 xl:flex-row">
+          <CustomFormField
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="emergencyContactName"
+            label="Emergency Contact Name"
+            placeholder="Guardian Name"
+          />
+          <CustomFormField
+            fieldType={FormFieldType.PHONE_INPUT}
+            control={form.control}
+            name="emergencyContactPhone"
+            label="Emergency Contact Phone"
+            placeholder="+1 234 567 890"
+          />
+        </div>
+        {/* medical information */}
+        <section className="space-y-6">
+          <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Medical Information</h2>
+          </div>
+        </section>
+        <CustomFormField
+          fieldType={FormFieldType.SELECT}
+          control={form.control}
+          name="primaryPhysician"
+          label="Primary Physician"
+          placeholder="Select your primary physician"
+        />
+        <div className="flex flex-col gap-6 xl:flex-row">
+          <CustomFormField
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="insuranceProvider"
+            label="Insurance provider"
+            placeholder="ex:Health Insurance Co."
+          />
+          <CustomFormField
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="insurancePolicyNumber"
+            label="Insurance policy number"
+            placeholder="ex:1234567890"
+          />
+        </div>
+        <div className="flex flex-col gap-6 xl:flex-row">
+          <CustomFormField
+            fieldType={FormFieldType.TEXTAREA}
+            control={form.control}
+            name="allergies"
+            label="Allergies (if any)"
+            placeholder="ex: Penicillin, Nuts"
+          />
+          <CustomFormField
+            fieldType={FormFieldType.TEXTAREA}
+            control={form.control}
+            name="currentMedication"
+            label="Current Medication"
+            placeholder="ex: Blood Pressure Medication"
+          />
+        </div>
+        <div className="flex flex-col gap-6 xl:flex-row">
+          <CustomFormField
+            fieldType={FormFieldType.TEXTAREA}
+            control={form.control}
+            name="familyMedicalHistory"
+            label="Family Medical History (if relevant)"
+            placeholder="ex: Diabetes, Heart Disease"
+          />
+          <CustomFormField
+            fieldType={FormFieldType.TEXTAREA}
+            control={form.control}
+            name="pastMedicalHistory"
+            label="Past Medical History"
+            placeholder="ex: Previous Surgeries, Chronic Conditions"
+          />
+        </div>
+        {/* identification and verification */}
+        <section className="space-y-6">
+          <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Identification And Verification</h2>
+          </div>
+        </section>
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
       </form>
     </Form>
