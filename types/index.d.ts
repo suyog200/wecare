@@ -36,6 +36,8 @@ declare interface RegisterUserParams extends CreateUserParams {
   identificationNumber: string | undefined;
   identificationDocument: FormData | undefined;
   privacyConsent: boolean;
+  blobFile?: Blob;
+  fileName?: string;
 }
 
 declare type CreateAppointmentParams = {

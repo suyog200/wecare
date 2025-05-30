@@ -27,8 +27,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { Doctors } from "@/constants";
 import { Textarea } from "./ui/textarea";
+import { Checkbox } from "./ui/checkbox";
 
 interface CustomProps {
   control: Control<any>;
@@ -43,6 +43,7 @@ interface CustomProps {
   showTimeSelect?: boolean;
   children?: React.ReactNode;
   renderSkeleton?: (field: any) => React.ReactNode;
+  options?: Array<string | { name: string; image: string }>;
 }
 
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
@@ -117,29 +118,64 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
       );
     case FormFieldType.SELECT:
       return (
-        <FormControl>
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
-            <SelectTrigger className="shad-select-trigger">
-              <SelectValue placeholder={props.placeholder} />
-            </SelectTrigger>
-            <SelectContent className="shad-select-content">
-              {Doctors.map((doctor) => (
-                <SelectItem key={doctor.name} value={doctor.name}>
+        // <FormControl>
+        //   <Select onValueChange={field.onChange} defaultValue={field.value}>
+        //     <SelectTrigger className="shad-select-trigger">
+        //       <SelectValue placeholder={props.placeholder} />
+        //     </SelectTrigger>
+        //     <SelectContent className="shad-select-content">
+        //       {options.map((option) => (
+        //         <SelectItem key={option.name} value={option.name}>
+        //           <div className="flex cursor-pointer items-center gap-2">
+        //         {option.image && (
+        //           <Image
+        //             src={option.image}
+        //             alt={option.label}
+        //             height={32}
+        //             width={32}
+        //             className="rounded-full border border-dark-500"
+        //           />
+        //         )}
+        //             <p>{option.name}</p>
+        //           </div>
+        //         </SelectItem>
+        //       ))}
+        //     </SelectContent>
+        //   </Select>
+        // </FormControl>
+         <FormControl>
+      <Select onValueChange={field.onChange} defaultValue={field.value}>
+        <SelectTrigger className="shad-select-trigger">
+          <SelectValue placeholder={props.placeholder} />
+        </SelectTrigger>
+        <SelectContent className="shad-select-content">
+          {props.options?.map((option, index) => {
+            if (typeof option === "string") {
+              return (
+                <SelectItem key={index} value={option}>
+                  <p>{option}</p>
+                </SelectItem>
+              );
+            } else {
+              return (
+                <SelectItem key={option.name} value={option.name}>
                   <div className="flex cursor-pointer items-center gap-2">
                     <Image
-                      src={doctor.image}
-                      alt={doctor.name}
+                      src={option.image}
+                      alt={option.name}
                       height={32}
                       width={32}
                       className="rounded-full border border-dark-500"
                     />
-                    <p>{doctor.name}</p>
+                    <p>{option.name}</p>
                   </div>
                 </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </FormControl>
+              );
+            }
+          })}
+        </SelectContent>
+      </Select>
+    </FormControl>
       );
     case FormFieldType.TEXTAREA: 
      return (
@@ -151,7 +187,22 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
           disabled={props.disabled}
         />
       </FormControl>
-     )  
+     ) 
+    case FormFieldType.CHECKBOX: 
+      return (
+        <FormControl>
+          <div className="flex items-center gap-4">
+            <Checkbox
+              id={field.name}
+              checked={field.value}
+              onCheckedChange={field.onChange}
+            />
+            <label htmlFor={props.name} className="checkbox-label">
+              {props.label}
+            </label>
+          </div>
+        </FormControl>
+      )  
     case FormFieldType.SKELETON:
       return renderSkeleton ? renderSkeleton(field) : null;
     default:
