@@ -22,3 +22,17 @@ export const createAppointment = async (appointment: CreateAppointmentParams) =>
     console.error("Error creating appointment:", error);
   }
 };
+
+
+export const getAppointment = async (appointmentId: string) => {
+  try {
+    const appointment = await databases.getDocument(
+      DATABASE_ID!,
+      APPOINTMENT_COLLECTION_ID!,
+      appointmentId
+    );
+    return parseStringify(appointment);
+  } catch (error) {
+    console.log('Error fetching appointment:', error);
+  }
+}
