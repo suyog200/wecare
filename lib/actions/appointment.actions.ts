@@ -47,6 +47,8 @@ export const getReccentAppointments = async () => {
       [Query.orderDesc("$createdAt")]
     );
 
+    console.log("Fetched appointments:", appointments);
+
     const initialCounts = {
       scheduledCount: 0,
       pendingCount: 0,
