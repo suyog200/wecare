@@ -11,16 +11,21 @@ import { getAppointmentSchema } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { FormFieldType } from "./PatientForm";
 import { Doctors } from "@/constants";
-import { createAppointment } from "@/lib/actions/appointment.actions";
+import { createAppointment, updateAppointment } from "@/lib/actions/appointment.actions";
+import { Appointment } from "@/types/appwrite.types";
 
 const AppointmentForm = ({
   userid,
   type,
   patientId,
+  appointment,
+  setOpen
 }: {
   userid: string;
   type: "create" | "cancel" | "schedule";
   patientId?: string;
+  appointment?: Appointment,
+  setOpen: (open: boolean) => void;
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -31,11 +36,11 @@ const AppointmentForm = ({
   const form = useForm<z.infer<typeof AppointmentFormValidation>>({
     resolver: zodResolver(AppointmentFormValidation),
     defaultValues: {
-        primaryPhysician: "",
-        schedule: new Date(),
-        reason: "",
-        note: "",
-        cancellationReason: "",
+        primaryPhysician: appointment ? appointment.primaryPhysician : "",
+        schedule: appointment ? new Date(appointment.schedule) : new Date(),
+        reason: appointment ? appointment.reason : "",
+        note: appointment ? appointment.note : "",
+        cancellationReason: appointment && appointment.cancellationReason || "",
     },
   });
 
@@ -68,12 +73,30 @@ const AppointmentForm = ({
         }
         const appointment = await createAppointment(appointmentData);
 
-        console.log("Appointment created successfully:", appointment);
         if(appointment) {
           form.reset();
           router.push(`/patients/${userid}/new-appointment/success?appointmentId=${appointment.$id}`);
         }
-      }   
+      } else {
+        const appointmentToUpdate = {
+          userId: userid,
+          appointmentId: appointment?.$id!,
+          appointment: {
+            primaryPhysician: values?.primaryPhysician,
+            schedule: new Date(values?.schedule),
+            status: status as Status,
+            cancellationReason: values?.cancellationReason,
+          },
+          type: type,
+        }
+
+        const updatedAppointment = await updateAppointment(appointmentToUpdate);
+
+        if (updatedAppointment) {
+          setOpen && setOpen(false);
+          form.reset();
+        }
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -99,10 +122,10 @@ const AppointmentForm = ({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
-        <section className="mb-12 space-y-4">
+        {type === 'create' && <section className="mb-12 space-y-4">
           <h1 className="header">New Appointment</h1>
           <p className="text-dark-700">Request new appointment in 10 seconds</p>
-        </section>
+        </section>}
         {/* CustomFormField Component */}
         {type !== "cancel" && (
           <>
@@ -114,6 +137,14 @@ const AppointmentForm = ({
               placeholder="Select a doctor"
               options={Doctors}
             />
+              <CustomFormField
+                fieldType={FormFieldType.DATE_PICKER}
+                control={form.control}
+                name="schedule"
+                label="Expected appointment date"
+                showTimeSelect
+                dateFormat="MMMM d, yyyy h:mm aa"
+              />
             <div className="flex flex-col gap-6 xl:flex-row">
               <CustomFormField
                 fieldType={FormFieldType.TEXTAREA}
@@ -130,14 +161,6 @@ const AppointmentForm = ({
                 placeholder="ex: Prefer afternoon appointments, etc."
               />
             </div>
-            <CustomFormField
-              fieldType={FormFieldType.DATE_PICKER}
-              control={form.control}
-              name="schedule"
-              label="Expected appointment date"
-              showTimeSelect
-              dateFormat="MMMM d, yyyy h:mm aa"
-            />
           </>
         )}
         {type === "cancel" && (

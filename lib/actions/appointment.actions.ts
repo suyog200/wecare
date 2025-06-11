@@ -8,6 +8,7 @@ import {
 } from "../appwrite.config";
 import { parseStringify } from "../utils";
 import { Appointment } from "@/types/appwrite.types";
+import { revalidatePath } from "next/cache";
 
 export const createAppointment = async (
   appointment: CreateAppointmentParams
@@ -76,3 +77,24 @@ export const getReccentAppointments = async () => {
     console.error("Error fetching recent appointments:", error);
   }
 };
+
+export const updateAppointment = async ({ userId, appointmentId, appointment, type} : UpdateAppointmentParams ) => {
+   try {
+    const updatedAppointment = await databases.updateDocument(
+      DATABASE_ID!,
+      APPOINTMENT_COLLECTION_ID!,
+      appointmentId,
+      appointment,
+    )
+
+    if(!updatedAppointment) {
+      throw new Error("Failed to update appointment");
+    }
+
+    // TODO SMS notification logic can be added here
+    revalidatePath('./admin')
+    return parseStringify(updatedAppointment);
+   } catch (error) {
+    console.error("Error updating appointment:", error);
+   }
+}
