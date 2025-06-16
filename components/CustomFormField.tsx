@@ -43,7 +43,7 @@ interface CustomProps {
   showTimeSelect?: boolean;
   children?: React.ReactNode;
   renderSkeleton?: (field: any) => React.ReactNode;
-  options?: Array<string | { name: string; image: string }>;
+  options?: Array<string | { name: string; image: string; specialization: string }>;
 }
 
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
@@ -167,7 +167,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
                       width={32}
                       className="rounded-full border border-dark-500"
                     />
-                    <p>{option.name}</p>
+                    <p>{option.name}, {option.specialization}</p>
                   </div>
                 </SelectItem>
               );

@@ -40,44 +40,93 @@ export const IdentificationTypes = [
   "Voter ID Card",
 ];
 
+// export const Doctors = [
+//   {
+//     image: "/assets/images/dr-green.png",
+//     name: "John Green",
+//   },
+//   {
+//     image: "/assets/images/dr-cameron.png",
+//     name: "Leila Cameron",
+//   },
+//   {
+//     image: "/assets/images/dr-livingston.png",
+//     name: "David Livingston",
+//   },
+//   {
+//     image: "/assets/images/dr-peter.png",
+//     name: "Evan Peter",
+//   },
+//   {
+//     image: "/assets/images/dr-powell.png",
+//     name: "Jane Powell",
+//   },
+//   {
+//     image: "/assets/images/dr-remirez.png",
+//     name: "Alex Ramirez",
+//   },
+//   {
+//     image: "/assets/images/dr-lee.png",
+//     name: "Jasmine Lee",
+//   },
+//   {
+//     image: "/assets/images/dr-cruz.png",
+//     name: "Alyana Cruz",
+//   },
+//   {
+//     image: "/assets/images/dr-sharma.png",
+//     name: "Hardik Sharma",
+//   },
+// ];
+
 export const Doctors = [
   {
     image: "/assets/images/dr-green.png",
     name: "John Green",
+    specialization: "Cardiologist", // Heart specialist
   },
   {
     image: "/assets/images/dr-cameron.png",
     name: "Leila Cameron",
+    specialization: "Dermatologist", // Skin specialist
   },
   {
     image: "/assets/images/dr-livingston.png",
     name: "David Livingston",
+    specialization: "Orthopedic", // Bone & joints specialist
   },
   {
     image: "/assets/images/dr-peter.png",
     name: "Evan Peter",
+    specialization: "Neurologist", // Brain & nervous system
   },
   {
     image: "/assets/images/dr-powell.png",
     name: "Jane Powell",
+    specialization: "Pediatrician", // Child specialist
   },
   {
     image: "/assets/images/dr-remirez.png",
     name: "Alex Ramirez",
+    specialization: "General Physician", // Primary care
   },
   {
     image: "/assets/images/dr-lee.png",
     name: "Jasmine Lee",
+    specialization: "Gynecologist", // Women's health
   },
   {
     image: "/assets/images/dr-cruz.png",
     name: "Alyana Cruz",
+    specialization: "Psychiatrist", // Mental health
   },
   {
     image: "/assets/images/dr-sharma.png",
     name: "Hardik Sharma",
+    specialization: "ENT Specialist", // Ear, Nose, Throat
   },
 ];
+
 
 export const StatusIcon = {
   scheduled: "/assets/icons/check.svg",
