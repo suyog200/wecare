@@ -60,7 +60,7 @@ const Home = () => {
       </section>
 
       {/* about us section */}
-      <section className="h-screen bg-dark-200" id="about">
+      <section className="bg-dark-200" id="about">
         <div className="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
           <div className="font-light text-gray-500 sm:text-lg dark:text-gray-400">
             <h2 className="mb-4 text-4xl md:text-5xl tracking-tight font-extrabold text-gray-900 dark:text-white">
@@ -463,7 +463,7 @@ const Home = () => {
 
       {/* Testimonals section */}
       <section
-          className="bg-dark-200 py-8 px-4 mx-auto max-w-screen-xl lg:px-6"
+          className="bg-dark-200"
           id="testimonial"
         >
           <div className="max-w-screen-md mb-8 lg:mb-16 text-center mx-auto">
@@ -477,9 +477,8 @@ const Home = () => {
             data-carousel="static"
           >
             {/* <!-- Carousel wrapper --> */}
-            <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
               {/* <!-- Item 1 --> */}
-              <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
+              <div className="relative overflow-hidden rounded-lg min-h-[420px] sm:min-h-[480px]">
                 {reviews.map((review, index) => (
                   <div
                     key={index}
@@ -521,7 +520,6 @@ const Home = () => {
                   </div>
                 ))}
               </div>
-            </div>
             {/* <!-- Slider controls --> */}
             <button
               type="button"
