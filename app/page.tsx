@@ -1,106 +1,17 @@
+'use client';
+
 import React from "react";
 import Image from "next/image";
 import { faqList, reviews, teamMembers } from "@/constants";
+import NavigationBar from "@/components/NavigationBar";
+
 
 const Home = () => {
+
   return (
     <div>
       {/* Navbar section */}
-      <nav className="bg-dark-200 sticky w-full z-20 top-0 start-0">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <a
-            href="/"
-            className="flex items-center space-x-3 rtl:space-x-reverse"
-          >
-            {/* <Image
-              src="/assets/icons/logo-full.svg"
-              width={200}
-              height={200}
-              alt="WeCare Logo"
-            /> */}
-            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-              WeCare
-            </span>
-          </a>
-          <button
-            data-collapse-toggle="navbar-default"
-            type="button"
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            aria-controls="navbar-default"
-            aria-expanded="false"
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="w-5 h-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
-          </button>
-          <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-            <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 bg-dark-200 md:bg-dark-200 dark:border-gray-700">
-              <li>
-                <a
-                  href="#home"
-                  className="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
-                  aria-current="page"
-                >
-                  Home
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#about"
-                  className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >
-                  About
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#services"
-                  className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >
-                  Services
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#testimonial"
-                  className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >
-                  Testimonial
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#team"
-                  className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >
-                  Our Team
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+      <NavigationBar />
 
       {/* Header secton     */}
       <section>
@@ -546,9 +457,11 @@ const Home = () => {
             </dl>
           </div>
         </section>
+      </section>
 
-        {/* Testimonals section */}
-        <section
+
+      {/* Testimonals section */}
+      <section
           className="bg-dark-200 py-8 px-4 mx-auto max-w-screen-xl lg:px-6"
           id="testimonial"
         >
@@ -658,7 +571,6 @@ const Home = () => {
               </span>
             </button>
           </div>
-        </section>
       </section>
 
       {/* Team section */}
@@ -796,73 +708,165 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Contact section */}
+      <section className="bg-dark-200" id="contact">
+        <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+          <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">
+            Contact Us
+          </h2>
+          <p className="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">
+            Have questions or need assistance? We're here to help! Fill out the
+            form below, and our team will get back to you as soon as possible.
+          </p>
+          <form action="#" className="space-y-8">
+            <div>
+              <label
+                htmlFor="email"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                Your email
+              </label>
+              <input
+                type="email"
+                id="email"
+                className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-0 focus:border-[#24ae7c] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-[#24ae7c] dark:shadow-sm-light"
+                placeholder="name@xyz.com"
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="subject"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                Subject
+              </label>
+              <input
+                type="text"
+                id="subject"
+                className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-0 focus:border-[#24ae7c] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-[#24ae7c] dark:shadow-sm-light"
+                placeholder="Let us know how we can help you"
+                required
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="message"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+              >
+                Your message
+              </label>
+              <textarea
+                id="message"
+                rows={6}
+                className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-0 focus:border-[#24ae7c] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-[#24ae7c] dark:shadow-sm-light"
+                placeholder="Leave a comment..."
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              className="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-green-300"
+              style={{ backgroundColor: "#24ae7c" }}
+            >
+              Send message
+            </button>
+          </form>
+        </div>
+      </section>
+
       {/* footer section */}
       <section className="bg-dark-200">
-<footer className="bg-white dark:bg-gray-900">
-    <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
-        <div className="md:flex md:justify-between gap-3">
-          <div className="mb-6 md:mb-0">
-              <a href="https://flowbite.com/" className="flex items-center">
-                  <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">WeCare</span>
-              </a>
+        <footer className="bg-white dark:bg-gray-900">
+          <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+            <div className="md:flex md:justify-between gap-3">
+              <div className="mb-6 md:mb-0">
+                <a href="https://flowbite.com/" className="flex items-center">
+                  <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+                    WeCare
+                  </span>
+                </a>
+              </div>
+              <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
+                <div>
+                  <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+                    Quick Links
+                  </h2>
+                  <ul className="text-gray-500 dark:text-gray-400 font-medium">
+                    <li className="mb-4">
+                      <a href="#home" className="hover:underline">
+                        Home
+                      </a>
+                    </li>
+                    <li className="mb-4">
+                      <a href="#about" className="hover:underline">
+                        About Us
+                      </a>
+                    </li>
+                    <li className="mb-4">
+                      <a href="#services" className="hover:underline">
+                        Services
+                      </a>
+                    </li>
+                    <li className="mb-4">
+                      <a href="#testimonial" className="hover:underline">
+                        Testimonial
+                      </a>
+                    </li>
+                    <li className="mb-4">
+                      <a href="#team" className="hover:underline">
+                        Our Team
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+                    Follow us
+                  </h2>
+                  <ul className="text-gray-500 dark:text-gray-400 font-medium">
+                    <li className="mb-4">
+                      <a href="#" className="hover:underline ">
+                        Facebook
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" className="hover:underline">
+                        Instagram
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+                    Contact Information
+                  </h2>
+                  <ul className="text-gray-500 dark:text-gray-400 font-medium">
+                    <li className="mb-4">
+                      <p>Email: support@wecare.health</p>
+                    </li>
+                    <li className="mb-4">
+                      <p>Phone: +91 98765 43210 </p>
+                    </li>
+                    <li className="mb-4">
+                      <p>Address: 1st Floor, MediHub Tower</p>
+                      <p>Goa, India</p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+            <div className="sm:flex sm:items-center sm:justify-between">
+              <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+                © 2025{" "}
+                <a href="/" className="hover:underline">
+                  WeCare
+                </a>
+                . All Rights Reserved.
+              </span>
+            </div>
           </div>
-          <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
-              <div>
-                  <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Quick Links</h2>
-                  <ul className="text-gray-500 dark:text-gray-400 font-medium">
-                      <li className="mb-4">
-                          <a href="#home" className="hover:underline">Home</a>
-                      </li>
-                      <li className="mb-4">
-                          <a href="#about" className="hover:underline">About Us</a>
-                      </li>
-                      <li className="mb-4">
-                          <a href="#services" className="hover:underline">Services</a>
-                      </li>
-                      <li className="mb-4">
-                          <a href="#testimonial" className="hover:underline">Testimonial</a>
-                      </li> 
-                      <li className="mb-4">
-                          <a href="#team" className="hover:underline">Our Team</a>
-                      </li>       
-                  </ul>
-              </div>
-              <div>
-                  <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Follow us</h2>
-                  <ul className="text-gray-500 dark:text-gray-400 font-medium">
-                      <li className="mb-4">
-                          <a href="#" className="hover:underline ">Facebook</a>
-                      </li>
-                      <li>
-                          <a href="#" className="hover:underline">Instagram</a>
-                      </li>
-                  </ul>
-              </div>
-              <div>
-                  <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Contact Information</h2>
-                  <ul className="text-gray-500 dark:text-gray-400 font-medium">
-                      <li className="mb-4">
-                          <p>Email: support@wecare.health</p>
-                      </li>
-                      <li className="mb-4">
-                          <p>Phone: +91 98765 43210 </p>
-                      </li>
-                      <li className="mb-4">
-                          <p>Address: 1st Floor, MediHub Tower</p>
-                          <p>Goa, India</p>
-                      </li>
-                  </ul>
-              </div>
-          </div>
-      </div>
-      <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-      <div className="sm:flex sm:items-center sm:justify-between">
-          <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2025 <a href="/" className="hover:underline">WeCare</a>. All Rights Reserved.
-          </span>
-      </div>
-    </div>
-</footer>
-
+        </footer>
       </section>
     </div>
   );
