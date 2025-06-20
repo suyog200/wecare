@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import Image from 'next/image';
 
 interface ButtonProps {
-    isLoading: boolean;
+    isLoading?: boolean;
     className?: string;
     children: React.ReactNode;
 }

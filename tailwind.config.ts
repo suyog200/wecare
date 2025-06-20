@@ -23,6 +23,10 @@ const config = {
     },
     extend: {
       colors: {
+        primary: {
+          DEFAULT: '#24AE7C',
+          light: '#3ED69A',
+        },
         green: {
           500: "#24AE7C",
           600: "#0D2A1F",

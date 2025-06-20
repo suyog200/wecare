@@ -56,3 +56,8 @@ declare type UpdateAppointmentParams = {
   appointment: Appointment;
   type: string;
 };
+
+declare type ContactFormParams = {
+  email: string;
+  message: string;
+};
