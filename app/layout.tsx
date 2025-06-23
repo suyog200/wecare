@@ -4,6 +4,7 @@ import { Plus_Jakarta_Sans as FontSans } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 
 import { cn } from "@/lib/utils";
+import 'flowbite'
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -23,7 +24,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
+      <head>
+        <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+      </head>
       <body
         className={cn(
           "min-h-screen bg-dark-300 font-sans antialiased",
@@ -37,6 +41,7 @@ export default function RootLayout({
           >
           {children}
         </ThemeProvider>
+        <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
       </body>
     </html>
   );
