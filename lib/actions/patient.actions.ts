@@ -16,19 +16,30 @@ import { InputFile } from "node-appwrite/file";
 
 export const createUser = async (user: CreateUserParams) => {
   try {
-    const newUser = await users.create(
-      ID.unique(),
-      user.email,
-      user.phone,
-      undefined,
-      user.name
-    );
-    return parseStringify(newUser);
-  } catch (error: any) {
-    if (error && error?.code === 409) {
-      const documents = await users.list([Query.equal("email", [user.email])]);
-      return documents?.users[0];
+    const existingUser = await users.list([Query.equal("email", [user.email])]);
+
+    if (existingUser.total > 0) {
+      return {
+        user: parseStringify(existingUser.users[0]),
+        message: "User with this email already exists.",
+        isNew: false,
+      }
+    } else {
+      const newUser = await users.create(
+        ID.unique(),
+        user.email,
+        user.phone,
+        undefined,
+        user.name
+      );
+      return {
+        user: parseStringify(newUser),
+        message: "User created successfully.",
+        isNew: true,
+      }
     }
+  } catch (error: any) {
+    console.log("Error in creating new user:",error);
   }
 };
 
