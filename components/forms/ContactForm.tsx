@@ -83,7 +83,7 @@ const ContactForm = () => {
           </button>
         </form>
       </Form>
-      {showToast && <Toast />}
+      {showToast && <Toast status="success"/>}
     </div>
   );
 };

@@ -13,13 +13,14 @@ export default function Home({ searchParams}: SearchParamProps) {
       
       <section className="remove-scrollbar container">
         <div className="sub-container max-w-[496px]">
-          <Image
-            src="/assets/icons/logo-full.svg"
-            height={1000}
-            width={1000}
-            alt="WeCare Logo"
-            className="mb-12 h-10 w-fit"
-          />
+          <a
+            href="/"
+            className="flex items-center space-x-3 rtl:space-x-reverse"
+          >
+            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+              WeCare
+            </span>
+          </a>
           <PatientForm />
           <div className="text-14-regular mt-20 flex justify-between">
             <p className="justify-items-end text-dark-600 xl:text-left">

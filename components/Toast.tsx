@@ -2,7 +2,7 @@ import React from "react";
 
 interface ToastProps {
   message?: string;
-  status?: "success" | "error";
+  status: "success" | "error";
 }
 
 const Toast = ({ status, message }: ToastProps) => {

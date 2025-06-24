@@ -46,12 +46,6 @@ const NavigationBar = () => {
             href="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            {/* <Image
-              src="/assets/icons/logo-full.svg"
-              width={200}
-              height={200}
-              alt="WeCare Logo"
-            /> */}
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               WeCare
             </span>

@@ -55,14 +55,13 @@ const PatientForm = () => {
 
       if (result && result.isNew) {
         router.push(`/patients/${result.user.$id}/register`);
-        setIsLoading(false);
       } else if (result && !result.isNew) {
         setShowToast(true);
         form.reset();
         setTimeout(() => {
           setShowToast(false);
         }, 8000); // Hide toast after 8 seconds
-      }
+      } 
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -72,7 +71,7 @@ const PatientForm = () => {
     <>
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
-        <section className="mb-12 space-y-4">
+        <section className="mb-12 space-y-4 mt-5">
           <h1 className="header">Hi there👋</h1>
           <p className="text-dark-700">Schedule your first appointment</p>
         </section>
