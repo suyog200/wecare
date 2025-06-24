@@ -118,7 +118,7 @@ export function DataTable<TData, TValue>({
             height={24}
             width={24}
             alt="arrow"
-            className="rotate-180"
+            className="rotate-90"
           />
         </Button>
       </div>
