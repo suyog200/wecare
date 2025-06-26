@@ -60,7 +60,6 @@ const RegisterForm = ({ user }: { user: User }) => {
       formData.append("blobFile", blobFile);
       formData.append("fileName", values.identificationDocument[0].name);
     }
-console.log("usre", user);
     try {
       const patientData = {
         ...values,

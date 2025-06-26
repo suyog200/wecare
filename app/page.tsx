@@ -1,14 +1,13 @@
-'use client';
+"use client";
 
 import React from "react";
 import Image from "next/image";
 import { faqList, reviews, teamMembers } from "@/constants";
 import NavigationBar from "@/components/NavigationBar";
 import ContactForm from "@/components/forms/ContactForm";
-
+import Link from "next/link";
 
 const Home = () => {
-
   return (
     <div>
       {/* Navbar section */}
@@ -26,8 +25,8 @@ const Home = () => {
                 Reliable medical services, simplified and free. Book
                 appointments with trusted doctors — in just a few clicks.
               </p>
-              <a
-                href="/new-user"
+              <Link
+                href="/signup"
                 className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-white rounded-lg hover:opacity-90 focus:ring-4 focus:ring-green-300"
                 style={{ backgroundColor: "#24ae7c" }}
               >
@@ -44,7 +43,7 @@ const Home = () => {
                     clipRule="evenodd"
                   ></path>
                 </svg>
-              </a>
+              </Link>
             </div>
             <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
               <Image
@@ -460,116 +459,124 @@ const Home = () => {
         </section>
       </section>
 
-
       {/* Testimonals section */}
-      <section
-          className="bg-dark-200"
-          id="testimonial"
+      <section className="bg-dark-200" id="testimonial">
+        <div className="max-w-screen-md mb-8 lg:mb-16 text-center mx-auto">
+          <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+            What our users say
+          </h2>
+        </div>
+        <div
+          id="controls-carousel"
+          className="relative w-full"
+          data-carousel="static"
         >
-          <div className="max-w-screen-md mb-8 lg:mb-16 text-center mx-auto">
-            <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-              What our users say
-            </h2>
-          </div>
-          <div
-            id="controls-carousel"
-            className="relative w-full"
-            data-carousel="static"
-          >
-            {/* <!-- Carousel wrapper --> */}
-              {/* <!-- Item 1 --> */}
-              <div className="relative overflow-hidden rounded-lg min-h-[420px] sm:min-h-[480px]">
-                {reviews.map((review, index) => (
-                  <div
-                    key={index}
-                    className={`${
-                      index === 0 ? "block" : "hidden"
-                    } duration-700 ease-in-out`}
-                    data-carousel-item
-                  >
-                    <div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
-                      <figure className="max-w-screen-md mx-auto">
-                        <svg
-                          className="h-12 mx-auto mb-3 text-gray-400 dark:text-gray-600"
-                          viewBox="0 0 24 27"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z"
-                            fill="currentColor"
-                          />
-                        </svg>
-                        <blockquote>
-                          <p className="text-2xl font-medium text-gray-900 dark:text-white">
-                            "{review.text}"
-                          </p>
-                        </blockquote>
-                        <figcaption className="flex items-center justify-center mt-6 space-x-3">
-                          <div className="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700">
-                            <div className="pr-3 font-medium text-gray-900 dark:text-white">
-                              {review.name}
-                            </div>
-                            <div className="pl-3 text-sm font-light text-gray-500 dark:text-gray-400">
-                              {review.role}
-                            </div>
-                          </div>
-                        </figcaption>
-                      </figure>
-                    </div>
-                  </div>
-                ))}
+          {/* <!-- Carousel wrapper --> */}
+          {/* <!-- Item 1 --> */}
+          <div className="relative overflow-hidden rounded-lg min-h-[420px] sm:min-h-[480px]">
+            {reviews.map((review, index) => (
+              <div
+                key={index}
+                className={`${
+                  index === 0 ? "block" : "hidden"
+                } duration-700 ease-in-out`}
+                data-carousel-item
+              >
+                <div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
+                  <figure className="max-w-screen-md mx-auto">
+                    <svg
+                      className="h-12 mx-auto mb-3 text-gray-400 dark:text-gray-600"
+                      viewBox="0 0 24 27"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                    <blockquote>
+                      <p className="text-2xl font-medium text-gray-900 dark:text-white">
+                        "{review.text}"
+                      </p>
+                    </blockquote>
+                    <figcaption className="flex items-center justify-center mt-6 space-x-3">
+                      <div className="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700">
+                        <div className="pr-3 font-medium text-gray-900 dark:text-white">
+                          {review.name}
+                        </div>
+                        <div className="pl-3 text-sm font-light text-gray-500 dark:text-gray-400">
+                          {review.role}
+                        </div>
+                      </div>
+                    </figcaption>
+                  </figure>
+                </div>
               </div>
-            {/* <!-- Slider controls --> */}
-            <button
-              type="button"
-              className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-              data-carousel-prev
-            >
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                <svg
-                  className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 6 10"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 1 1 5l4 4"
-                  />
-                </svg>
-                <span className="sr-only">Previous</span>
-              </span>
-            </button>
-            <button
-              type="button"
-              className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-              data-carousel-next
-            >
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                <svg
-                  className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 6 10"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m1 9 4-4-4-4"
-                  />
-                </svg>
-                <span className="sr-only">Next</span>
-              </span>
-            </button>
+            ))}
           </div>
+          {/* <!-- Slider controls --> */}
+          <button
+            type="button"
+            className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+            data-carousel-prev
+          >
+            <span
+              className="inline-flex items-center justify-center w-10 h-10 rounded-full 
+  bg-gray-200 dark:bg-gray-700 
+  group-hover:bg-gray-300 dark:group-hover:bg-gray-600 
+  group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-600 
+  group-focus:outline-none"
+            >
+              <svg
+                className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 6 10"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 1 1 5l4 4"
+                />
+              </svg>
+              <span className="sr-only">Previous</span>
+            </span>
+          </button>
+          <button
+            type="button"
+            className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+            data-carousel-next
+          >
+            <span
+              className="inline-flex items-center justify-center w-10 h-10 rounded-full 
+  bg-gray-200 dark:bg-gray-700 
+  group-hover:bg-gray-300 dark:group-hover:bg-gray-600 
+  group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-600 
+  group-focus:outline-none"
+            >
+              <svg
+                className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 6 10"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 9 4-4-4-4"
+                />
+              </svg>
+              <span className="sr-only">Next</span>
+            </span>
+          </button>
+        </div>
       </section>
 
       {/* Team section */}

@@ -11,9 +11,11 @@ import {
   storage,
   users,
 } from "../appwrite.config";
+import { account } from "../appwriteClient";
 import { parseStringify } from "../utils";
 import { InputFile } from "node-appwrite/file";
 
+//signup
 export const createUser = async (user: CreateUserParams) => {
   try {
     const existingUser = await users.list([Query.equal("email", [user.email])]);
@@ -28,8 +30,8 @@ export const createUser = async (user: CreateUserParams) => {
       const newUser = await users.create(
         ID.unique(),
         user.email,
-        user.phone,
         undefined,
+        user.password,
         user.name
       );
       return {
@@ -42,6 +44,17 @@ export const createUser = async (user: CreateUserParams) => {
     console.log("Error in creating new user:",error);
   }
 };
+
+//login
+export const loginUser = async (user : loginUserParams) => {
+  try {
+    const session = await account.createEmailPasswordSession(user.email, user.password);
+    console.log("User logged in successfully:", session);
+    return parseStringify(session);
+  } catch (error) {
+    console.log("Error in logging in user:", error);
+  }
+}
 
 export const getUser = async (userId: string) => {
   try {

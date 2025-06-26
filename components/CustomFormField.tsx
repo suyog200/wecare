@@ -44,6 +44,7 @@ interface CustomProps {
   children?: React.ReactNode;
   renderSkeleton?: (field: any) => React.ReactNode;
   options?: Array<string | { name: string; image: string; specialization: string }>;
+  type?: string; // For input type
 }
 
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
@@ -55,6 +56,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     showTimeSelect,
     dateFormat,
     renderSkeleton,
+    type
   } = props;
 
   switch (fieldType) {
@@ -75,6 +77,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
               placeholder={placeholder}
               {...field}
               className="shad-input border-0"
+              type={type || "text"}
             />
           </FormControl>
         </div>
@@ -118,32 +121,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
       );
     case FormFieldType.SELECT:
       return (
-        // <FormControl>
-        //   <Select onValueChange={field.onChange} defaultValue={field.value}>
-        //     <SelectTrigger className="shad-select-trigger">
-        //       <SelectValue placeholder={props.placeholder} />
-        //     </SelectTrigger>
-        //     <SelectContent className="shad-select-content">
-        //       {options.map((option) => (
-        //         <SelectItem key={option.name} value={option.name}>
-        //           <div className="flex cursor-pointer items-center gap-2">
-        //         {option.image && (
-        //           <Image
-        //             src={option.image}
-        //             alt={option.label}
-        //             height={32}
-        //             width={32}
-        //             className="rounded-full border border-dark-500"
-        //           />
-        //         )}
-        //             <p>{option.name}</p>
-        //           </div>
-        //         </SelectItem>
-        //       ))}
-        //     </SelectContent>
-        //   </Select>
-        // </FormControl>
-         <FormControl>
+      <FormControl>
       <Select onValueChange={field.onChange} defaultValue={field.value}>
         <SelectTrigger className="shad-select-trigger">
           <SelectValue placeholder={props.placeholder} />

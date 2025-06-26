@@ -7,9 +7,9 @@ import { Form } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
 import { useState } from "react";
-import { UserFormValidation } from "@/lib/validation";
+import { LoginFormValidation, UserFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
-import { createUser } from "@/lib/actions/patient.actions";
+import { createUser, loginUser } from "@/lib/actions/patient.actions";
 import Toast from "../Toast";
 
 export enum FormFieldType {
@@ -22,46 +22,73 @@ export enum FormFieldType {
   SKELETON = "skeleton",
 }
 
-const PatientForm = () => {
+interface PatientFormProps {
+  header: string;
+  subHeader: string;
+  newUser: boolean; // Optional prop to indicate if it's a new user
+}
+const PatientForm = ({ header, subHeader, newUser }: PatientFormProps) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   // 1. Define your form.
 
-  const form = useForm<z.infer<typeof UserFormValidation>>({
-    resolver: zodResolver(UserFormValidation),
+  const form = useForm<z.infer<typeof UserFormValidation | typeof LoginFormValidation>>({
+    resolver: zodResolver(newUser ? UserFormValidation : LoginFormValidation),
     defaultValues: {
       name: "",
       email: "",
-      phone: "",
+      password: "",
     },
   });
 
   // 2. Define a submit handler.
-  async function onSubmit({
-    name,
-    email,
-    phone,
-  }: z.infer<typeof UserFormValidation>) {
+  async function onSubmit(
+    values: z.infer<typeof UserFormValidation> | z.infer<typeof LoginFormValidation>
+  ) {
     setIsLoading(true);
+    console.log(newUser, "newUser");
     try {
-      const userData = {
-        name,
-        email,
-        phone,
-      };
+      if (newUser) {
+        // Signup logic
+        const userData = {
+          name: (values as z.infer<typeof UserFormValidation>).name,
+          email: values.email,
+          password: values.password,
+        };
 
-      const result = await createUser(userData);
+        const result = await createUser(userData);
 
-      if (result && result.isNew) {
-        router.push(`/patients/${result.user.$id}/register`);
-      } else if (result && !result.isNew) {
-        setShowToast(true);
-        form.reset();
-        setTimeout(() => {
-          setShowToast(false);
-        }, 8000); // Hide toast after 8 seconds
-      } 
+        if (result && result.isNew) {
+          router.push(`/login`);
+        } else if (result && !result.isNew) {
+          setErrorMessage(result.message || "User already exists.");
+          setShowToast(true);
+          form.reset();
+          setTimeout(() => {
+            setShowToast(false);
+          }, 8000); // Hide toast after 8 seconds
+        }
+      } else {
+        // Login logic
+        const userData = {
+          email: values.email,
+          password: values.password,
+        }
+        const loginResult = await loginUser(userData);
+        if (loginResult) {
+          router.push(`/patients/${loginResult.userId}/register`);
+        } else {
+          setErrorMessage("Invalid email or password.");
+          setShowToast(true);
+          form.reset();
+          setTimeout(() => {
+            setShowToast(false);
+          }, 8000); // Hide toast after 8 seconds
+        }
+        setIsLoading(false);
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -69,42 +96,56 @@ const PatientForm = () => {
 
   return (
     <>
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
-        <section className="mb-12 space-y-4 mt-5">
-          <h1 className="header">Hi there👋</h1>
-          <p className="text-dark-700">Schedule your first appointment</p>
-        </section>
-        {/* CustomFormField Component */}
-        <CustomFormField
-          fieldType={FormFieldType.INPUT}
-          control={form.control}
-          name="name"
-          label="Full name"
-          placeholder="John Doe"
-          iconSrc="/assets/icons/user.svg"
-          iconAlt="user"
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-6 flex-1"
+        >
+          <section className="mb-12 space-y-4 mt-5">
+            <h1 className="header">{header}👋</h1>
+            <p className="text-dark-700">{subHeader}</p>
+          </section>
+          {/* CustomFormField Component */}
+          {newUser && (
+            <CustomFormField
+              fieldType={FormFieldType.INPUT}
+              control={form.control}
+              name="name"
+              label="Full name"
+              placeholder="John Doe"
+              iconSrc="/assets/icons/user.svg"
+              iconAlt="user"
+            />
+          )}
+          <CustomFormField
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="email"
+            label="Email"
+            placeholder="xyz@gmail.com"
+            iconSrc="/assets/icons/email.svg"
+            iconAlt="email"
+          />
+          <CustomFormField
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="password"
+            label="Password"
+            placeholder="********"
+            type="password"
+            iconSrc="/assets/icons/lock.svg"
+            iconAlt="lock"
+          />
+          <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
+        </form>
+      </Form>
+      {showToast && (
+        <Toast
+          status="error"
+          message={errorMessage}
+          onClose={() => setShowToast(false)}
         />
-        <CustomFormField
-          fieldType={FormFieldType.INPUT}
-          control={form.control}
-          name="email"
-          label="Email"
-          placeholder="xyz@gmail.com"
-          iconSrc="/assets/icons/email.svg"
-          iconAlt="email"
-        />
-        <CustomFormField
-          fieldType={FormFieldType.PHONE_INPUT}
-          control={form.control}
-          name="phone"
-          label="Phone numder"
-          placeholder="+91 234 567 890"
-        />
-        <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
-      </form>
-    </Form>
-    {showToast && <Toast status="error" message="User with email or phone already exist!"/>}
+      )}
     </>
   );
 };
