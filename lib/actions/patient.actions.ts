@@ -27,6 +27,7 @@ export const createUser = async (user: CreateUserParams) => {
         isNew: false,
       }
     } else {
+      //creating new user
       const newUser = await users.create(
         ID.unique(),
         user.email,
@@ -49,12 +50,12 @@ export const createUser = async (user: CreateUserParams) => {
 export const loginUser = async (user : loginUserParams) => {
   try {
     const session = await account.createEmailPasswordSession(user.email, user.password);
-    console.log("User logged in successfully:", session);
     return parseStringify(session);
   } catch (error) {
     console.log("Error in logging in user:", error);
   }
 }
+
 
 export const getUser = async (userId: string) => {
   try {

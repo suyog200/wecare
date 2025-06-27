@@ -45,7 +45,10 @@ export const getReccentAppointments = async () => {
     const appointments = await databases.listDocuments(
       DATABASE_ID!,
       APPOINTMENT_COLLECTION_ID!,
-      [Query.orderDesc("$createdAt")]
+      [
+        Query.limit(100), // set a higher limit
+        Query.orderDesc("$createdAt"), // optional: sort by latest
+      ]
     );
 
     const initialCounts = {
@@ -55,18 +58,21 @@ export const getReccentAppointments = async () => {
     };
 
     const counts = (appointments.documents as Appointment[]).reduce(
-      (acc, appointment) => {
-        if (appointment.status === "scheduled") {
-          acc.scheduledCount += 1;
-        } else if (appointment.status === "pending") {
-          acc.pendingCount += 1;
-        } else if (appointment.status === "cancelled") {
-          acc.cancelledCount += 1;
-        }
-        return acc;
-      },
-      initialCounts
-    );
+  (acc, appointment) => {
+    const status = appointment.status?.toLowerCase().trim(); // normalize
+
+    if (status === "scheduled") {
+      acc.scheduledCount += 1;
+    } else if (status === "pending") {
+      acc.pendingCount += 1;
+    } else if (status === "cancelled") {
+      acc.cancelledCount += 1;
+    }
+
+    return acc;
+  },
+  initialCounts
+);
 
     const data = {
       totalCount: appointments.total,
@@ -102,9 +108,9 @@ export const updateAppointment = async ({
     Hi, it's WeCare
     ${
       type === "schedule"
-        ? `Your appointment has been scheduled for ${formatDateTime(
-            appointment.schedule!
-          ).dateTime} with Dr. ${appointment.primaryPhysician}.`
+        ? `Your appointment has been scheduled for ${
+            formatDateTime(appointment.schedule!).dateTime
+          } with Dr. ${appointment.primaryPhysician}.`
         : `We regret to inform you that your appointment has been cancelled for the following reason: ${appointment.cancellationReason}`
     }
     `;

@@ -65,10 +65,10 @@ const PatientForm = ({ header, subHeader, newUser }: PatientFormProps) => {
         } else if (result && !result.isNew) {
           setErrorMessage(result.message || "User already exists.");
           setShowToast(true);
-          form.reset();
           setTimeout(() => {
             setShowToast(false);
           }, 8000); // Hide toast after 8 seconds
+          setIsLoading(false);
         }
       } else {
         // Login logic
@@ -82,17 +82,17 @@ const PatientForm = ({ header, subHeader, newUser }: PatientFormProps) => {
         } else {
           setErrorMessage("Invalid email or password.");
           setShowToast(true);
-          form.reset();
           setTimeout(() => {
             setShowToast(false);
           }, 8000); // Hide toast after 8 seconds
+          setIsLoading(false);
         }
-        setIsLoading(false);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   }
+
 
   return (
     <>
