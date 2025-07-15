@@ -38,6 +38,7 @@ const PatientForm = ({ header, subHeader, newUser }: PatientFormProps) => {
     resolver: zodResolver(newUser ? UserFormValidation : LoginFormValidation),
     defaultValues: {
       name: "",
+      phone: "",
       email: "",
       password: "",
     },
@@ -54,6 +55,7 @@ const PatientForm = ({ header, subHeader, newUser }: PatientFormProps) => {
         // Signup logic
         const userData = {
           name: (values as z.infer<typeof UserFormValidation>).name,
+          phone: (values as z.infer<typeof UserFormValidation>).phone,
           email: values.email,
           password: values.password,
         };
@@ -107,6 +109,7 @@ const PatientForm = ({ header, subHeader, newUser }: PatientFormProps) => {
           </section>
           {/* CustomFormField Component */}
           {newUser && (
+            <>
             <CustomFormField
               fieldType={FormFieldType.INPUT}
               control={form.control}
@@ -116,6 +119,14 @@ const PatientForm = ({ header, subHeader, newUser }: PatientFormProps) => {
               iconSrc="/assets/icons/user.svg"
               iconAlt="user"
             />
+            <CustomFormField
+            fieldType={FormFieldType.PHONE_INPUT}
+            control={form.control}
+            name="phone"
+            label="Phone numder"
+            placeholder="+1 234 567 890"
+          />
+            </>
           )}
           <CustomFormField
             fieldType={FormFieldType.INPUT}
