@@ -3,7 +3,7 @@ import PasskeyModal from "@/components/PasskeyModal";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Home({ searchParams}: SearchParamProps) {
+export default function Login({ searchParams}: SearchParamProps) {
   const isAdmin = searchParams.admin === "true";
 
   return (
@@ -13,21 +13,28 @@ export default function Home({ searchParams}: SearchParamProps) {
       
       <section className="remove-scrollbar container">
         <div className="sub-container max-w-[496px]">
-          <Image
-            src="/assets/icons/logo-full.svg"
-            height={1000}
-            width={1000}
-            alt="WeCare Logo"
-            className="mb-12 h-10 w-fit"
-          />
-          <PatientForm />
+          <Link
+            href="/"
+            className="flex items-center space-x-3 rtl:space-x-reverse"
+          >
+            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+              WeCare
+            </span>
+          </Link>
+          <PatientForm header="Welcome back" subHeader="Please login to book your appointment." newUser={false}/>
+          <Link
+            href="/signup"
+            className="flex items-center space-x-3 rtl:space-x-reverse"
+          >
+            <span className="self-center text-l whitespace-nowrap dark:text-white mt-3">
+              Don't have an account?{" "}
+              <span className="text-green-500">Create</span>
+            </span>
+          </Link>
           <div className="text-14-regular mt-20 flex justify-between">
             <p className="justify-items-end text-dark-600 xl:text-left">
               © 2025 WeCare Health. All rights reserved.
             </p>
-            <Link href="new-user/?admin=true" className="text-green-500">
-              Admin
-            </Link>
           </div>
         </div>
       </section>

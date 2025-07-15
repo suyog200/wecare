@@ -14,15 +14,14 @@ const Success = async ({ params: { userid }, searchParams }: SearchParamProps) =
   return (
     <div className="flex h-screen max-h-screen px-[5%]">
       <div className="success-img">
-        <Link href="/">
-          <Image
-            src="/assets/icons/logo-full.svg"
-            alt="logo"
-            height={1000}
-            width={1000}
-            className="h-20 w-fit"
-          />
-        </Link>
+        <a
+            href="/"
+            className="flex items-center space-x-3 rtl:space-x-reverse"
+          >
+            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+              WeCare
+            </span>
+        </a>
         <section className="flex flex-col items-center">
           <Image
             src="/assets/gifs/success.gif"

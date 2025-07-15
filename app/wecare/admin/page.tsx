@@ -6,6 +6,8 @@ import Link from "next/link";
 import React from "react";
 import { columns } from "@/components/table/columns";
 
+export const dynamic = "force-dynamic"; // 👈 forces fresh data
+
 
 
 const Admin = async () => {
@@ -16,15 +18,11 @@ const Admin = async () => {
     <div className="mx-auto flex max-w-7xl flex-col space-y-14">
       <header className="admin-header">
         <Link href="/" className="cursor-pointer">
-          <Image
-            src="/assets/icons/logo-full.svg"
-            height={32}
-            width={32}
-            alt="WeCare Logo"
-            className="h-8 w-fit"
-          />
+            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+              WeCare
+            </span>
         </Link>
-        <p className="text-16-semibold">Admin Dashboard</p>
+        <p className="text-16-semibold">WeCare Admin Dashboard</p>
       </header>
       <main className="admin-main">
         <section className="w-full space-y-4">

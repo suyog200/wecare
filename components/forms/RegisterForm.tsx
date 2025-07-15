@@ -60,7 +60,6 @@ const RegisterForm = ({ user }: { user: User }) => {
       formData.append("blobFile", blobFile);
       formData.append("fileName", values.identificationDocument[0].name);
     }
-console.log("usre", user);
     try {
       const patientData = {
         ...values,
@@ -78,7 +77,6 @@ console.log("usre", user);
     } catch (error) {
       console.error("Error submitting form:", error);
     }
-    setIsLoading(false);
   }
 
   return (
@@ -89,7 +87,7 @@ console.log("usre", user);
         })}
         className="space-y-12 flex-1"
       >
-        <section className="space-y-4">
+        <section className="space-y-4 mt-5">
           <h1 className="header">Welcome👋</h1>
           <p className="text-dark-700">Let us know more about yourself.</p>
         </section>

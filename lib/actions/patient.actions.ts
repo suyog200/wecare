@@ -11,26 +11,51 @@ import {
   storage,
   users,
 } from "../appwrite.config";
+import { account } from "../appwriteClient";
 import { parseStringify } from "../utils";
 import { InputFile } from "node-appwrite/file";
 
+//signup
 export const createUser = async (user: CreateUserParams) => {
   try {
-    const newUser = await users.create(
-      ID.unique(),
-      user.email,
-      user.phone,
-      undefined,
-      user.name
-    );
-    return parseStringify(newUser);
-  } catch (error: any) {
-    if (error && error?.code === 409) {
-      const documents = await users.list([Query.equal("email", [user.email])]);
-      return documents?.users[0];
+    const existingUser = await users.list([Query.equal("email", [user.email])]);
+
+    if (existingUser.total > 0) {
+      return {
+        user: parseStringify(existingUser.users[0]),
+        message: "User with this email already exists.",
+        isNew: false,
+      }
+    } else {
+      //creating new user
+      const newUser = await users.create(
+        ID.unique(),
+        user.email,
+        undefined,
+        user.password,
+        user.name
+      );
+      return {
+        user: parseStringify(newUser),
+        message: "User created successfully.",
+        isNew: true,
+      }
     }
+  } catch (error: any) {
+    console.log("Error in creating new user:",error);
   }
 };
+
+//login
+export const loginUser = async (user : loginUserParams) => {
+  try {
+    const session = await account.createEmailPasswordSession(user.email, user.password);
+    return parseStringify(session);
+  } catch (error) {
+    console.log("Error in logging in user:", error);
+  }
+}
+
 
 export const getUser = async (userId: string) => {
   try {
