@@ -10,6 +10,7 @@ declare type Status = "pending" | "scheduled" | "cancelled";
 
 declare interface CreateUserParams {
   name: string;
+  phone: string; 
   email: string;
   password: string;
 }
