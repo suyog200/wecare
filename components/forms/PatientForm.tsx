@@ -10,6 +10,7 @@ import { useState } from "react";
 import { LoginFormValidation, UserFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { createUser, loginUser } from "@/lib/actions/patient.actions";
+import { generateJWT } from "@/lib/actions/jwt";
 import Toast from "../Toast";
 
 export enum FormFieldType {
@@ -80,6 +81,10 @@ const PatientForm = ({ header, subHeader, newUser }: PatientFormProps) => {
         }
         const loginResult = await loginUser(userData);
         if (loginResult) {
+          console.log("Login success, creating token...");
+          const token = await generateJWT({ email: userData.email }); // note the await
+          console.log("Generated token:", token);
+          localStorage.setItem("auth_token", token);
           router.push(`/patients/${loginResult.userId}/register`);
         } else {
           setErrorMessage("Invalid email or password.");
