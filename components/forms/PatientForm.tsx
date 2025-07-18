@@ -81,9 +81,7 @@ const PatientForm = ({ header, subHeader, newUser }: PatientFormProps) => {
         }
         const loginResult = await loginUser(userData);
         if (loginResult) {
-          console.log("Login success, creating token...");
           const token = await generateJWT({ email: userData.email }); // note the await
-          console.log("Generated token:", token);
           localStorage.setItem("auth_token", token);
           router.push(`/patients/${loginResult.userId}/register`);
         } else {
