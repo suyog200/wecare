@@ -76,6 +76,22 @@ export function encryptKey(passkey: string) {
   return btoa(passkey);
 }
 
-export function decryptKey(passkey: string) {
-  return atob(passkey);
+export function decryptKey(passkey: string): string | null {
+  try {
+    // Check if the string is valid Base64
+    if (!passkey || typeof passkey !== 'string') {
+      return null;
+    }
+    
+    // Basic Base64 validation
+    const base64Regex = /^[A-Za-z0-9+/]*={0,2}$/;
+    if (!base64Regex.test(passkey)) {
+      return null;
+    }
+    
+    return atob(passkey);
+  } catch (error) {
+    console.error('Failed to decrypt key:', error);
+    return null;
+  }
 }

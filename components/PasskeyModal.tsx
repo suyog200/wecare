@@ -41,7 +41,7 @@ const PasskeyModal = () => {
     if (path) {
       if (accesskey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY!.toString()) {
         setOpen(false);
-        router.push("/admin");
+        router.push("/wecare/admin");
       } else {
         setOpen(true);
       }
@@ -56,8 +56,15 @@ const PasskeyModal = () => {
     if (passkey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
       const encryptedKey = encryptKey(passkey);
 
-      localStorage.setItem("accesskey", encryptedKey);
+        const expiryTime = new Date().getTime() + 60 * 60 * 1000; // expires in 1 hour
+        const accessData = {
+          key: encryptedKey,
+          expiresAt: expiryTime,
+        };
+
+      localStorage.setItem("accesskey", JSON.stringify(accessData));
       setOpen(false);
+      router.push("/wecare/admin");
     } else {
       setError("Invalid passkey. Please try again.");
       setPasskey("");

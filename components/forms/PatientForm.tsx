@@ -10,7 +10,9 @@ import { useState } from "react";
 import { LoginFormValidation, UserFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { createUser, loginUser } from "@/lib/actions/patient.actions";
+import { generateJWT } from "@/lib/actions/jwt";
 import Toast from "../Toast";
+import Link from "next/link";
 
 export enum FormFieldType {
   INPUT = "input",
@@ -80,6 +82,8 @@ const PatientForm = ({ header, subHeader, newUser }: PatientFormProps) => {
         }
         const loginResult = await loginUser(userData);
         if (loginResult) {
+          const token = await generateJWT({ email: userData.email }); // note the await
+          localStorage.setItem("auth_token", token);
           router.push(`/patients/${loginResult.userId}/register`);
         } else {
           setErrorMessage("Invalid email or password.");
@@ -107,6 +111,17 @@ const PatientForm = ({ header, subHeader, newUser }: PatientFormProps) => {
             <h1 className="header">{header}👋</h1>
             <p className="text-dark-700">{subHeader}</p>
           </section>
+          {!newUser && (
+          <Link
+            href="/signup"
+            className="flex items-center space-x-3 rtl:space-x-reverse"
+          >
+            <span className="self-center text-l whitespace-nowrap dark:text-white mt-1">
+              New to WeCare?{" "}
+              <span className="text-green-500">Create Account</span>
+            </span>
+          </Link>
+          )}
           {/* CustomFormField Component */}
           {newUser && (
             <>

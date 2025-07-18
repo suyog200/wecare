@@ -18,6 +18,7 @@ declare interface loginUserParams {
   email: string;
   password: string;
 }
+
 declare interface User extends CreateUserParams {
   $id: string;
 }
