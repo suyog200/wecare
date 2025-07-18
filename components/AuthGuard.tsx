@@ -9,14 +9,32 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    const token = localStorage.getItem("auth_token");
-    const valid = token && verifyJWT(token);
+    const checkAuth = async () => {
+      const isProtected = pathname.startsWith("/patients");
 
-    const isProtected = pathname.startsWith("/patients");
+      if (!isProtected) return; // ✅ only check JWT for protected routes
 
-    if (isProtected && !valid) {
-      router.replace("/signup");
-    }
+      const token = localStorage.getItem("auth_token");
+
+      if (!token) {
+        router.replace("/login");
+        return;
+      }
+
+      try {
+        const payload = await verifyJWT(token);
+        if (!payload) {
+          localStorage.removeItem("auth_token");
+          router.replace("/login");
+        }
+      } catch (err) {
+        console.error("Invalid token:", err);
+        localStorage.removeItem("auth_token");
+        router.replace("/login");
+      }
+    };
+
+    checkAuth();
   }, [pathname]);
 
   return <>{children}</>;
