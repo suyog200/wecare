@@ -23,12 +23,12 @@ export default function Login({ searchParams}: SearchParamProps) {
           </Link>
           <PatientForm header="Welcome back" subHeader="Please login to book your appointment." newUser={false}/>
           <Link
-            href="/signup"
+            href="/resetPassword"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
             <span className="self-center text-l whitespace-nowrap dark:text-white mt-3">
-              Don't have an account?{" "}
-              <span className="text-green-500">Create</span>
+              Forgot password?{" "}
+              <span className="text-green-500">Reset</span>
             </span>
           </Link>
           <div className="text-14-regular mt-20 flex justify-between">
