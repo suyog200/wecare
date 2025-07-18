@@ -6,7 +6,7 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { NewPasswordValidation, ResetPasswordValidation } from "@/lib/validation";
 import { useRouter, useSearchParams } from "next/navigation";
 import Toast from "../Toast";
@@ -25,9 +25,10 @@ export enum FormFieldType {
 interface PatientFormProps {
   header: string;
   subHeader: string;
-  newUser: boolean; // Optional prop to indicate if it's a new user
+  newUser: boolean;
 }
-const NewPasswordForm = ({ header, subHeader, newUser }: PatientFormProps) => {
+
+const NewPasswordFormContent = ({ header, subHeader, newUser }: PatientFormProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const userId = searchParams.get("userId");
@@ -35,20 +36,16 @@ const NewPasswordForm = ({ header, subHeader, newUser }: PatientFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  // 1. Define your form.
 
   const form = useForm<z.infer<typeof NewPasswordValidation>>({
     resolver: zodResolver(NewPasswordValidation),
     defaultValues: {
-    password: "",
-    confirmPassword: "",
+      password: "",
+      confirmPassword: "",
     },
   });
 
-  // 2. Define a submit handler.
-  async function onSubmit(
-    values: z.infer<typeof NewPasswordValidation>
-  ) {
+  async function onSubmit(values: z.infer<typeof NewPasswordValidation>) {
     setIsLoading(true);
     try {
       if (!userId || !secret) {
@@ -63,8 +60,8 @@ const NewPasswordForm = ({ header, subHeader, newUser }: PatientFormProps) => {
       setShowToast(true);
       setErrorMessage("Password updated successfully.");
       setTimeout(() => {
-            router.push("/login");
-        }, 2000);
+        router.push("/login");
+      }, 2000);
 
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -74,7 +71,6 @@ const NewPasswordForm = ({ header, subHeader, newUser }: PatientFormProps) => {
       setIsLoading(false);
     }
   }
-
 
   return (
     <>
@@ -87,8 +83,8 @@ const NewPasswordForm = ({ header, subHeader, newUser }: PatientFormProps) => {
             <h1 className="header">{header}👋</h1>
             <p className="text-dark-700">{subHeader}</p>
           </section>
-          {/* CustomFormField Component */}
-        <CustomFormField
+          
+          <CustomFormField
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="password"
@@ -98,7 +94,7 @@ const NewPasswordForm = ({ header, subHeader, newUser }: PatientFormProps) => {
             iconSrc="/assets/icons/lock.svg"
             iconAlt="lock"
           />
-        <CustomFormField
+          <CustomFormField
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="confirmPassword"
@@ -119,6 +115,21 @@ const NewPasswordForm = ({ header, subHeader, newUser }: PatientFormProps) => {
         />
       )}
     </>
+  );
+};
+
+const NewPasswordForm = (props: PatientFormProps) => {
+  return (
+    <Suspense fallback={
+      <div className="flex h-screen items-center justify-center">
+        <div className="text-center">
+          <div className="spinner border-4 border-gray-200 border-t-green-500 rounded-full w-8 h-8 animate-spin mx-auto"></div>
+          <p className="mt-2 text-gray-600">Loading form...</p>
+        </div>
+      </div>
+    }>
+      <NewPasswordFormContent {...props} />
+    </Suspense>
   );
 };
 
