@@ -9,7 +9,7 @@ type resetPasswordParams = {
 // Function to reset password
 export const resetPassword = async (email: resetPasswordParams) => {
   try {
-    await account.createRecovery(email.email, "http://localhost:3000/new-password");
+    await account.createRecovery(email.email, "https://wecare-tan.vercel.app/new-password");
   } catch (error) {
     console.log("Error in resetting password:", error);
   }
