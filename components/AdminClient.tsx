@@ -80,7 +80,7 @@ const AdminClient = ({ appointments, isAdminFlag }: AdminClientProps) => {
             WeCare
           </span>
         </Link>
-        <p className="text-16-semibold">WeCare Admin Dashboard</p>
+        <p className="text-16-semibold hidden sm:block">WeCare Admin Dashboard</p>
         <button
             onClick={() => {
             localStorage.removeItem("accesskey");
