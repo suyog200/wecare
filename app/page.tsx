@@ -30,7 +30,7 @@ const Home = () => {
                 className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-white rounded-lg hover:opacity-90 focus:ring-4 focus:ring-green-300"
                 style={{ backgroundColor: "#24ae7c" }}
               >
-                Get started
+                Book your appointment
                 <svg
                   className="w-5 h-5 ml-2 -mr-1"
                   fill="currentColor"
